@@ -1,18 +1,29 @@
-//Variaveis
-const inpTarefa = document.getElementById('tarefa')
-const btnTarefa = document.getElementById('btnAdiciona')
-const conteinerTarefas = document.getElementById('conteiner-tarefas')
-let num = 0 //Número de tarefas adicionadas
+const form = document.getElementById('form-task');
+const conteinerTask = document.getElementById('conteiner-task');
 
-//Eventos
-btnTarefa.addEventListener('click', function(){adicionaTarefa()})
+form.onsubmit = function(e){
+    e.preventDefault();
+    const inpTask = document.getElementById('tarefa');
+    addTask(inpTask.value);
+    form.reset();
+}
 
-//Funções
-function adicionaTarefa(){
-    num += 1
-    let html = `<input type="checkbox" name="tarefa${num}" id="check">`
-    html += `<label for="tarefa${num}">${inpTarefa.value}</label>`
-    html += `<br>`
+function addTask(descriptionTask){
+    const taskList = document.createElement('div');
+    const newTask = document.createElement('input');
+    const taskLabel = document.createElement('label')
+    const taskDescriptionNode = document.createTextNode(descriptionTask);
 
-    conteinerTarefas.innerHTML += html
+    newTask.setAttribute('type', 'checkbox');
+    newTask.setAttribute('name', descriptionTask);
+    newTask.setAttribute('id', descriptionTask);
+
+    taskLabel.setAttribute('for', descriptionTask);
+    taskLabel.appendChild(taskDescriptionNode);
+
+    taskList.classList.add('task-item');
+    taskList.appendChild(newTask);
+    taskList.appendChild(taskLabel);
+
+    conteinerTask.appendChild(taskList);
 }
